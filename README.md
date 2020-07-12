@@ -19,8 +19,10 @@ To use it:
 
 # What's in the name?
 
-![Félicette](https://cdn.mos.cms.futurecdn.net/FmRpZwTWeFtVvnzqpoidYd.jpg)
 
-Félicette was the first cat launched into space, on 18 October 1963. Unfortunately, she lost her life due to this mission. [Here's](https://www.youtube.com/watch?v=v-tpmvGRoyw) a footage of the mission from the archive.
+![Félicette](https://i.imgur.com/q4G5ThZ.jpg)
 
-When you see a satellite imagery, imagine Félicette took the picture for you :)) 
+
+Félicette was the first cat launched into space, on 18 October 1963. Even though she landed back on earth safely, but she was humanely killed after 2 months to save her from a bad health, and scientific research. [Here's](https://www.youtube.com/watch?v=v-tpmvGRoyw) a footage of the mission from the archives.
+
+When you get a satellite imagery using this tool, imagine Félicette took the picture for you :)) 
