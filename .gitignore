@@ -6,3 +6,5 @@ build/
 
 .tox/
 .coverage
+
+.DS_Store
