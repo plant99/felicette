@@ -26,3 +26,6 @@ def get_wrs_dict(lon, lat):
     path = feature['PATH']
     row = feature['ROW']
     return {'path': path, 'row': row}
+
+def get_tiny_bbox(lon, lat):
+    return [lon, lat, lon + 0.00001, lat + 0.00001]
