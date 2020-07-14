@@ -1,13 +1,15 @@
 from satsearch import Search
 from felicette.utils.get_wrs import get_tiny_bbox
-search = Search(bbox=get_tiny_bbox(85.8245, 20.2961), collection="landsat-8-11")
-print('bbox search: %s items' % search.found())
-items = search.items()
+from felicette.utils.landsat_util import find_first_landsat
 
-for index, item in enumerate(items):
-	print(item.assets)
-	if index == 6:
-		break
-# print(items._items)
 
-# print(items.summary())
+search = Search(bbox=get_tiny_bbox(85.8245, 20.2961), query = {
+  "eo:cloud_cover": {
+    "lt": 10
+  },
+  "collection": {
+    "eq": "landsat-8-l1"
+  }
+})
+landsat_item = search.items()[0]
+print(landsat_item.assets)
