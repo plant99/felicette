@@ -32,5 +32,6 @@ def get_wrs_dict(lon, lat):
     return {"path": path, "row": row}
 
 
-def get_tiny_bbox(lon, lat):
+def get_tiny_bbox(coordinates):
+    lon, lat = coordinates
     return [lon, lat, lon + 0.00001, lat + 0.00001]
