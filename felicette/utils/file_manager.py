@@ -32,5 +32,6 @@ def file_paths_wrt_id(id):
         "b4": os.path.join(home_path_id, "%s-b4.tiff" % (id)),
         "b3": os.path.join(home_path_id, "%s-b3.tiff" % (id)),
         "b2": os.path.join(home_path_id, "%s-b2.tiff" % (id)),
-        "output_path": os.path.join(home_path_id, "%s-color-processed.tiff" % (id))
+        "output_path": os.path.join(home_path_id, "%s-color-processed.tiff" % (id)),
+        "output_path_jpeg": os.path.join(home_path_id, "%s-color-processed.jpeg" % (id))
     }

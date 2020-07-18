@@ -2,6 +2,8 @@ import rasterio as rio
 import numpy as np
 from rio_color import operations, utils
 from utils.file_manager import file_paths_wrt_id
+from PIL import Image
+import os
 
 def process_landsat_image(id):
 	# get paths of files related to this id
@@ -46,5 +48,13 @@ def process_landsat_image(id):
 	    rgb.write(norm_g.astype(np.uint16),2) 
 	    rgb.write(norm_b.astype(np.uint16),3) 
 	    rgb.close()
+
+
+	im = Image.open(paths["output_path"])
+	im.save(paths["output_path_jpeg"], "JPEG", quality=100)
+	print("saved as tiff and jpeg")
+
+
+
 
 process_landsat_image("LC81390462020136")
