@@ -24,3 +24,13 @@ def save_to_file(url, filename):
 def data_file_exists(filename):
     file_path = os.path.join(data_path, filename)
     return os.path.exists(file_path)
+
+def file_paths_wrt_id(id):
+    home_path_id = os.path.join(workdir, id)
+    return {
+        "base": home_path_id,
+        "b4": os.path.join(home_path_id, "%s-b4.tiff" % (id)),
+        "b3": os.path.join(home_path_id, "%s-b3.tiff" % (id)),
+        "b2": os.path.join(home_path_id, "%s-b2.tiff" % (id)),
+        "output_path": os.path.join(home_path_id, "%s-color-processed.tiff" % (id))
+    }
