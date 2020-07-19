@@ -50,9 +50,11 @@ def process_landsat_data(id):
 
 
     # pansharpen the image
+    print("Pansharpening image, get ready for some serious resolution enhancement! ✨")
     gdal_pansharpen(["", paths["b8"], paths["stack"], paths["pan_sharpened"]])
 
 
+    print("Let's make our 🌍 imagery a bit more colorful!")
     # apply rio-color correction
     ops_string = "sigmoidal rgb 20 0.2"
     # refer to felicette.utils.color.py to see the parameters of this function
@@ -69,4 +71,4 @@ def process_landsat_data(id):
     # save as jpeg image
     im = Image.open(paths["output_path"])
     im.save(paths["output_path_jpeg"], "JPEG", quality=100)
-    print("saved as tiff and jpeg")
+    print("Saved image as geoTIFF and JPEG")

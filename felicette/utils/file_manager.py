@@ -2,6 +2,7 @@ import tempfile
 import os
 import requests
 from tqdm import tqdm
+from rich import print
 
 from felicette.constants import band_tag_map
 
@@ -17,14 +18,14 @@ def check_sat_path(id):
 def save_to_file(url, filename, id):
     data_path = os.path.join(workdir, id)
     data_id = filename.split("-")[1].split(".")[0]
-    print("Downloading %s band" % band_tag_map[data_id])
+    print("Data doesn't exist, downloading", band_tag_map[data_id], "band")
     file_path = os.path.join(data_path, filename)
     response = requests.get(url, stream=True)
     with tqdm.wrapattr(
         open(file_path, "wb"),
         "write",
         miniters=1,
-        desc=filename,
+        desc=data_id,
         total=int(response.headers.get("content-length", 0)),
     ) as fout:
         for chunk in response.iter_content(chunk_size=4096):

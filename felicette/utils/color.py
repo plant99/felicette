@@ -9,6 +9,7 @@ from rasterio.transform import guard_transform
 from rio_color.workers import atmos_worker, color_worker
 from rio_color.operations import parse_operations, simple_atmo_opstring
 import riomucho
+from rich import print
 
 
 def check_jobs(jobs):
