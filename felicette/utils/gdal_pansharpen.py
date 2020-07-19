@@ -42,7 +42,7 @@ def DoesDriverHandleExtension(drv, ext):
 
 def GetExtension(filename):
     ext = os.path.splitext(filename)[1]
-    if ext.startswith('.'):
+    if ext.startswith("."):
         ext = ext[1:]
     return ext
 
@@ -52,9 +52,10 @@ def GetOutputDriversFor(filename):
     ext = GetExtension(filename)
     for i in range(gdal.GetDriverCount()):
         drv = gdal.GetDriver(i)
-        if (drv.GetMetadataItem(gdal.DCAP_CREATE) is not None or
-            drv.GetMetadataItem(gdal.DCAP_CREATECOPY) is not None) and \
-           drv.GetMetadataItem(gdal.DCAP_RASTER) is not None:
+        if (
+            drv.GetMetadataItem(gdal.DCAP_CREATE) is not None
+            or drv.GetMetadataItem(gdal.DCAP_CREATECOPY) is not None
+        ) and drv.GetMetadataItem(gdal.DCAP_RASTER) is not None:
             if ext and DoesDriverHandleExtension(drv, ext):
                 drv_list.append(drv.ShortName)
             else:
@@ -64,9 +65,13 @@ def GetOutputDriversFor(filename):
 
     # GMT is registered before netCDF for opening reasons, but we want
     # netCDF to be used by default for output.
-    if ext.lower() == 'nc' and not drv_list and \
-       drv_list[0].upper() == 'GMT' and drv_list[1].upper() == 'NETCDF':
-        drv_list = ['NETCDF', 'GMT']
+    if (
+        ext.lower() == "nc"
+        and not drv_list
+        and drv_list[0].upper() == "GMT"
+        and drv_list[1].upper() == "NETCDF"
+    ):
+        drv_list = ["NETCDF", "GMT"]
 
     return drv_list
 
@@ -76,23 +81,34 @@ def GetOutputDriverFor(filename):
     ext = GetExtension(filename)
     if not drv_list:
         if not ext:
-            return 'GTiff'
+            return "GTiff"
         else:
             raise Exception("Cannot guess driver for %s" % filename)
     elif len(drv_list) > 1:
-        print("Several drivers matching %s extension. Using %s" % (ext if ext else '', drv_list[0]))
+        print(
+            "Several drivers matching %s extension. Using %s"
+            % (ext if ext else "", drv_list[0])
+        )
     return drv_list[0]
 
 
 def Usage():
-    print('Usage: gdal_pansharpen [--help-general] pan_dataset {spectral_dataset[,band=num]}+ out_dataset')
-    print('                       [-of format] [-b band]* [-w weight]*')
-    print('                       [-r {nearest,bilinear,cubic,cubicspline,lanczos,average}]')
-    print('                       [-threads {ALL_CPUS|number}] [-bitdepth val] [-nodata val]')
-    print('                       [-spat_adjust {union,intersection,none,nonewithoutwarning}]')
-    print('                       [-verbose_vrt] [-co NAME=VALUE]* [-q]')
-    print('')
-    print('Create a dataset resulting from a pansharpening operation.')
+    print(
+        "Usage: gdal_pansharpen [--help-general] pan_dataset {spectral_dataset[,band=num]}+ out_dataset"
+    )
+    print("                       [-of format] [-b band]* [-w weight]*")
+    print(
+        "                       [-r {nearest,bilinear,cubic,cubicspline,lanczos,average}]"
+    )
+    print(
+        "                       [-threads {ALL_CPUS|number}] [-bitdepth val] [-nodata val]"
+    )
+    print(
+        "                       [-spat_adjust {union,intersection,none,nonewithoutwarning}]"
+    )
+    print("                       [-verbose_vrt] [-co NAME=VALUE]* [-q]")
+    print("")
+    print("Create a dataset resulting from a pansharpening operation.")
     return -1
 
 
@@ -122,39 +138,39 @@ def gdal_pansharpen(argv):
     i = 1
     argc = len(argv)
     while i < argc:
-        if (argv[i] == '-of' or argv[i] == '-f') and i < len(argv) - 1:
+        if (argv[i] == "-of" or argv[i] == "-f") and i < len(argv) - 1:
             frmt = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-r' and i < len(argv) - 1:
+        elif argv[i] == "-r" and i < len(argv) - 1:
             resampling = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-spat_adjust' and i < len(argv) - 1:
+        elif argv[i] == "-spat_adjust" and i < len(argv) - 1:
             spat_adjust = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-b' and i < len(argv) - 1:
+        elif argv[i] == "-b" and i < len(argv) - 1:
             bands.append(int(argv[i + 1]))
             i = i + 1
-        elif argv[i] == '-w' and i < len(argv) - 1:
+        elif argv[i] == "-w" and i < len(argv) - 1:
             weights.append(float(argv[i + 1]))
             i = i + 1
-        elif argv[i] == '-co' and i < len(argv) - 1:
+        elif argv[i] == "-co" and i < len(argv) - 1:
             creation_options.append(argv[i + 1])
             i = i + 1
-        elif argv[i] == '-threads' and i < len(argv) - 1:
+        elif argv[i] == "-threads" and i < len(argv) - 1:
             num_threads = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-bitdepth' and i < len(argv) - 1:
+        elif argv[i] == "-bitdepth" and i < len(argv) - 1:
             bitdepth = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-nodata' and i < len(argv) - 1:
+        elif argv[i] == "-nodata" and i < len(argv) - 1:
             nodata = argv[i + 1]
             i = i + 1
-        elif argv[i] == '-q':
+        elif argv[i] == "-q":
             callback = None
-        elif argv[i] == '-verbose_vrt':
+        elif argv[i] == "-verbose_vrt":
             verbose_vrt = True
-        elif argv[i][0] == '-':
-            sys.stderr.write('Unrecognized option : %s\n' % argv[i])
+        elif argv[i][0] == "-":
+            sys.stderr.write("Unrecognized option : %s\n" % argv[i])
             return Usage()
         elif pan_name is None:
             pan_name = argv[i]
@@ -163,13 +179,13 @@ def gdal_pansharpen(argv):
                 return 1
         else:
             if last_name is not None:
-                pos = last_name.find(',band=')
+                pos = last_name.find(",band=")
                 if pos > 0:
                     spectral_name = last_name[0:pos]
                     ds = gdal.Open(spectral_name)
                     if ds is None:
                         return 1
-                    band_num = int(last_name[pos + len(',band='):])
+                    band_num = int(last_name[pos + len(",band=") :])
                     band = ds.GetRasterBand(band_num)
                     spectral_ds.append(ds)
                     spectral_bands.append(band)
@@ -198,11 +214,11 @@ def gdal_pansharpen(argv):
     else:
         for band in bands:
             if band < 0 or band > len(spectral_bands):
-                print('Invalid band number in -b: %d' % band)
+                print("Invalid band number in -b: %d" % band)
                 return 1
 
     if weights and len(weights) != len(spectral_bands):
-        print('There must be as many -w values specified as input spectral bands')
+        print("There must be as many -w values specified as input spectral bands")
         return 1
 
     vrt_xml = """<VRTDataset subClass="VRTPansharpenedDataset">\n"""
@@ -213,7 +229,11 @@ def gdal_pansharpen(argv):
             colorname = gdal.GetColorInterpretationName(sband.GetColorInterpretation())
             vrt_xml += """  <VRTRasterBand dataType="%s" band="%d" subClass="VRTPansharpenedRasterBand">
       <ColorInterp>%s</ColorInterp>
-  </VRTRasterBand>\n""" % (datatype, i + 1, colorname)
+  </VRTRasterBand>\n""" % (
+                datatype,
+                i + 1,
+                colorname,
+            )
 
     vrt_xml += """  <PansharpeningOptions>\n"""
 
@@ -228,57 +248,68 @@ def gdal_pansharpen(argv):
         vrt_xml += """      </AlgorithmOptions>\n"""
 
     if resampling is not None:
-        vrt_xml += '      <Resampling>%s</Resampling>\n' % resampling
+        vrt_xml += "      <Resampling>%s</Resampling>\n" % resampling
 
     if num_threads is not None:
-        vrt_xml += '      <NumThreads>%s</NumThreads>\n' % num_threads
+        vrt_xml += "      <NumThreads>%s</NumThreads>\n" % num_threads
 
     if bitdepth is not None:
-        vrt_xml += '      <BitDepth>%s</BitDepth>\n' % bitdepth
+        vrt_xml += "      <BitDepth>%s</BitDepth>\n" % bitdepth
 
     if nodata is not None:
-        vrt_xml += '      <NoData>%s</NoData>\n' % nodata
+        vrt_xml += "      <NoData>%s</NoData>\n" % nodata
 
     if spat_adjust is not None:
-        vrt_xml += '      <SpatialExtentAdjustment>%s</SpatialExtentAdjustment>\n' % spat_adjust
+        vrt_xml += (
+            "      <SpatialExtentAdjustment>%s</SpatialExtentAdjustment>\n"
+            % spat_adjust
+        )
 
-    pan_relative = '0'
-    if frmt.upper() == 'VRT':
+    pan_relative = "0"
+    if frmt.upper() == "VRT":
         if not os.path.isabs(pan_name):
-            pan_relative = '1'
+            pan_relative = "1"
             pan_name = os.path.relpath(pan_name, os.path.dirname(out_name))
 
     vrt_xml += """    <PanchroBand>
       <SourceFilename relativeToVRT="%s">%s</SourceFilename>
       <SourceBand>1</SourceBand>
-    </PanchroBand>\n""" % (pan_relative, pan_name)
+    </PanchroBand>\n""" % (
+        pan_relative,
+        pan_name,
+    )
 
     for i, sband in enumerate(spectral_bands):
-        dstband = ''
+        dstband = ""
         for j, band in enumerate(bands):
             if i + 1 == band:
                 dstband = ' dstBand="%d"' % (j + 1)
                 break
 
-        ms_relative = '0'
+        ms_relative = "0"
         ms_name = spectral_ds[i].GetDescription()
-        if frmt.upper() == 'VRT':
+        if frmt.upper() == "VRT":
             if not os.path.isabs(ms_name):
-                ms_relative = '1'
+                ms_relative = "1"
                 ms_name = os.path.relpath(ms_name, os.path.dirname(out_name))
 
         vrt_xml += """    <SpectralBand%s>
       <SourceFilename relativeToVRT="%s">%s</SourceFilename>
       <SourceBand>%d</SourceBand>
-    </SpectralBand>\n""" % (dstband, ms_relative, ms_name, sband.GetBand())
+    </SpectralBand>\n""" % (
+            dstband,
+            ms_relative,
+            ms_name,
+            sband.GetBand(),
+        )
 
     vrt_xml += """  </PansharpeningOptions>\n"""
     vrt_xml += """</VRTDataset>\n"""
 
-    if frmt.upper() == 'VRT':
-        f = gdal.VSIFOpenL(out_name, 'wb')
+    if frmt.upper() == "VRT":
+        f = gdal.VSIFOpenL(out_name, "wb")
         if f is None:
-            print('Cannot create %s' % out_name)
+            print("Cannot create %s" % out_name)
             return 1
         gdal.VSIFWriteL(vrt_xml, 1, len(vrt_xml), f)
         gdal.VSIFCloseL(f)
@@ -293,7 +324,9 @@ def gdal_pansharpen(argv):
         return 0
 
     vrt_ds = gdal.Open(vrt_xml)
-    out_ds = gdal.GetDriverByName(frmt).CreateCopy(out_name, vrt_ds, 0, creation_options, callback=callback)
+    out_ds = gdal.GetDriverByName(frmt).CreateCopy(
+        out_name, vrt_ds, 0, creation_options, callback=callback
+    )
     if out_ds is None:
         return 1
     return 0
@@ -303,5 +336,5 @@ def main():
     return gdal_pansharpen(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(gdal_pansharpen(sys.argv))

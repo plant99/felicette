@@ -6,6 +6,7 @@ from rio_color.workers import atmos_worker, color_worker
 from rio_color.operations import parse_operations, simple_atmo_opstring
 import riomucho
 
+
 def check_jobs(jobs):
     """Validate number of jobs."""
     if jobs == 0:
@@ -15,6 +16,7 @@ def check_jobs(jobs):
 
         jobs = multiprocessing.cpu_count()
     return jobs
+
 
 def color(jobs, out_dtype, src_path, dst_path, operations, creation_options):
     with rasterio.open(src_path) as src:
@@ -35,6 +37,7 @@ def color(jobs, out_dtype, src_path, dst_path, operations, creation_options):
         parse_operations(args["ops_string"])
     except ValueError as e:
         import sys
+
         sys.exit(1)
         print(e)
 
