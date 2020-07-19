@@ -3,7 +3,20 @@ Satellite imagery for dummies.
 """
 from setuptools import find_packages, setup
 
-dependencies = ["click"]
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+dependencies = [
+    "click==7.1.2",
+    "requests==2.24.0",
+    "sat-search==0.2.3",
+    "rich==3.3.2",
+    "tqdm==4.48.0",
+    "rasterio==1.1.5",
+    "rio-color==1.0.0",
+    "pillow==7.2.0",
+    "GDAL==3.1.2",
+]
 
 setup(
     name="felicette",
