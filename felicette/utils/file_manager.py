@@ -19,7 +19,7 @@ def check_sat_path(id):
 def save_to_file(url, filename, id):
     data_path = os.path.join(workdir, id)
     data_id = filename.split("-")[1].split(".")[0]
-    rprint("Data doesn't exist, downloading", band_tag_map[data_id], "band")
+    rprint("✗ required data doesn't exist, downloading", band_tag_map[data_id], "band")
     file_path = os.path.join(data_path, filename)
     response = requests.get(url, stream=True)
     with tqdm.wrapattr(
