@@ -2,11 +2,12 @@ import tempfile
 import os
 import requests
 from tqdm import tqdm
-from rich import print
+from rich import print as rprint
 
 from felicette.constants import band_tag_map
 
 workdir = os.path.join(os.path.expanduser("~"), "felicette-data")
+
 
 def check_sat_path(id):
     data_path = os.path.join(workdir, id)
@@ -18,7 +19,7 @@ def check_sat_path(id):
 def save_to_file(url, filename, id):
     data_path = os.path.join(workdir, id)
     data_id = filename.split("-")[1].split(".")[0]
-    print("Data doesn't exist, downloading", band_tag_map[data_id], "band")
+    rprint("Data doesn't exist, downloading", band_tag_map[data_id], "band")
     file_path = os.path.join(data_path, filename)
     response = requests.get(url, stream=True)
     with tqdm.wrapattr(

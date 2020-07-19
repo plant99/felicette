@@ -4,7 +4,7 @@ from rio_color import operations, utils
 from matplotlib import pyplot as plt
 from PIL import Image
 import PIL
-from rich import print
+from rich import print as rprint
 
 from felicette.utils.color import color
 from felicette.utils.gdal_pansharpen import gdal_pansharpen
@@ -48,13 +48,11 @@ def process_landsat_data(id):
         rgb.write(b, 3)
         rgb.close()
 
-
     # pansharpen the image
-    print("Pansharpening image, get ready for some serious resolution enhancement! ✨")
+    rprint("Pansharpening image, get ready for some serious resolution enhancement! ✨")
     gdal_pansharpen(["", paths["b8"], paths["stack"], paths["pan_sharpened"]])
 
-
-    print("Let's make our 🌍 imagery a bit more colorful!")
+    rprint("Let's make our 🌍 imagery a bit more colorful for a human eye!")
     # apply rio-color correction
     ops_string = "sigmoidal rgb 20 0.2"
     # refer to felicette.utils.color.py to see the parameters of this function
@@ -71,4 +69,8 @@ def process_landsat_data(id):
     # save as jpeg image
     im = Image.open(paths["output_path"])
     im.save(paths["output_path_jpeg"], "JPEG", quality=100)
-    print("Saved image as geoTIFF and JPEG")
+    print("Generated 🌍 images!🎉")
+    rprint("[blue]GeoTIFF saved at:[/blue]")
+    print(paths["output_path"])
+    rprint("[blue]JPEG image saved at:[/blue]")
+    print(paths["output_path_jpeg"])
