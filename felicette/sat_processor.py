@@ -1,7 +1,6 @@
 import rasterio as rio
 import numpy as np
 from rio_color import operations, utils
-from matplotlib import pyplot as plt
 from PIL import Image
 import PIL
 from rich import print as rprint
