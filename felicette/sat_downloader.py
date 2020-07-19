@@ -16,11 +16,10 @@ def search_landsat_data(coordinates, cloud_cover_lt):
         },
         sort=[{"field": "eo:cloud_cover", "direction": "asc"}],
     )
-    print(search_items[0]._data["id"])
+
     # improvement: filter by date, cloud cover here
 
     search_items = search.items()
-    # print(search_items)
     if not len(search_items):
         print("No data matched your search, please try different parameters.")
         sys.exit(0)
@@ -29,7 +28,7 @@ def search_landsat_data(coordinates, cloud_cover_lt):
 
 
 def download_landsat_data(
-    coordinates=(85.8245, 20.2961), cloud_cover_lt=10, bands=[2, 3, 4, 8]
+    coordinates=(85.8245, 20.2961), bands=[2, 3, 4, 8], cloud_cover_lt=10
 ):
     landsat_item = search_landsat_data(coordinates, cloud_cover_lt)
     # check if directory exists to save the data for this product id
