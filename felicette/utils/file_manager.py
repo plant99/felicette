@@ -3,14 +3,21 @@ import os
 import requests
 from tqdm import tqdm
 
+from felicette.constants import band_tag_map
+
 workdir = os.path.join(os.path.expanduser("~"), "felicette-data")
-data_path = os.path.join(workdir, "LC81390462020136")
 
-if not os.path.exists(data_path):
-    os.mkdir(data_path)
+def check_sat_path(id):
+    data_path = os.path.join(workdir, id)
+
+    if not os.path.exists(data_path):
+        os.mkdir(data_path)
 
 
-def save_to_file(url, filename):
+def save_to_file(url, filename, id):
+    data_path = os.path.join(workdir, id)
+    data_id = filename.split("-")[1].split(".")[0]
+    print("Downloading %s band" % band_tag_map[data_id])
     file_path = os.path.join(data_path, filename)
     response = requests.get(url, stream=True)
     with tqdm.wrapattr(
@@ -25,7 +32,8 @@ def save_to_file(url, filename):
     fout.close()
 
 
-def data_file_exists(filename):
+def data_file_exists(filename, id):
+    data_path = os.path.join(workdir, id)
     file_path = os.path.join(data_path, filename)
     return os.path.exists(file_path)
 

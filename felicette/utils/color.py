@@ -1,4 +1,8 @@
-"""Main CLI."""
+"""
+Source: https://github.com/mapbox/rio-color/blob/master/rio_color/scripts/cli.py
+
+Further modifications made to make it functional with felicette
+"""
 import rasterio
 from rasterio.rio.options import creation_options
 from rasterio.transform import guard_transform

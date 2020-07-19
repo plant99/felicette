@@ -4,7 +4,7 @@ from rio_color import operations, utils
 from matplotlib import pyplot as plt
 from PIL import Image
 import PIL
-import os
+from rich import print
 
 from felicette.utils.color import color
 from felicette.utils.gdal_pansharpen import gdal_pansharpen
@@ -13,19 +13,11 @@ from felicette.utils.file_manager import file_paths_wrt_id
 # increase PIL image processing pixels count limit
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
-count = 0
 
-
-def process_landsat_image(id):
-    global count
-    count += 1
-    if count > 1:
-        return
+def process_landsat_data(id):
 
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
-
-    print("being called as parent function")
 
     # stack R,G,B bands
 
@@ -56,8 +48,10 @@ def process_landsat_image(id):
         rgb.write(b, 3)
         rgb.close()
 
+
     # pansharpen the image
     gdal_pansharpen(["", paths["b8"], paths["stack"], paths["pan_sharpened"]])
+
 
     # apply rio-color correction
     ops_string = "sigmoidal rgb 20 0.2"
@@ -76,6 +70,3 @@ def process_landsat_image(id):
     im = Image.open(paths["output_path"])
     im.save(paths["output_path_jpeg"], "JPEG", quality=100)
     print("saved as tiff and jpeg")
-
-
-process_landsat_image("LC81390462020136")
