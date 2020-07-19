@@ -1,3 +1,4 @@
+
 # felicette
 
 Satellite imagery for dummies.
@@ -16,6 +17,41 @@ To use it:
 
     $ felicette --help
 
+```
+Usage: felicette [OPTIONS]
+
+Satellite imagery for dummies.
+
+Options:
+
+-c, --coordinates FLOAT...  Coordinates in (lon, lat) format. This overrides
+
+-l command
+
+  
+
+-l, --location-name TEXT  Location name in string format
+
+-p, --pan-enhancement Enhance image with panchromatic band
+
+--help  Show this message and exit.
+
+```
+
+Felicette can download and process Landsat images taking the location's input as `(lon, lat)` or the location name. They can be used in the following way.
+
+With location name:
+
+	$ felicette -l "Taal Volcano"
+
+With coordinates:
+
+	$ felicette -c 120.9977 14.0113
+
+`-p` option uses the panchromatic band to enhance image's resolution to 15 meters, contrary to resolution of RGB bands(30 meters). 
+To get a better image using felicette use:
+
+	$ felicette -p -c 120.9977 14.0113
 
 # What's in the name?
 
