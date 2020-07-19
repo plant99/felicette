@@ -15,7 +15,13 @@ from felicette.sat_processor import process_landsat_data
     help="Coordinates in (lon, lat) format. This overrides -l command",
 )
 @click.option("-l", "--location-name", type=str, help="Location name in string format")
-@click.option("-p", "--pan-enhancement", default=False, is_flag=True, help="Enhance image with panchromatic band")
+@click.option(
+    "-p",
+    "--pan-enhancement",
+    default=False,
+    is_flag=True,
+    help="Enhance image with panchromatic band",
+)
 def main(coordinates, location_name, pan_enhancement):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:

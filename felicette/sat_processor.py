@@ -14,7 +14,7 @@ from felicette.utils.file_manager import file_paths_wrt_id
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
-def process_landsat_data(id, bands=[2,3,4]):
+def process_landsat_data(id, bands=[2, 3, 4]):
 
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
@@ -53,7 +53,9 @@ def process_landsat_data(id, bands=[2,3,4]):
     # check if band 8, i.e panchromatic band has to be processed
     if 8 in bands:
         # pansharpen the image
-        rprint("Pansharpening image, get ready for some serious resolution enhancement! ✨")
+        rprint(
+            "Pansharpening image, get ready for some serious resolution enhancement! ✨"
+        )
         gdal_pansharpen(["", paths["b8"], paths["stack"], paths["pan_sharpened"]])
         # set color operation's path to the pansharpened-image's path
         source_path_for_rio_color = paths["pan_sharpened"]
