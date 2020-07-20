@@ -52,7 +52,3 @@ def download_landsat_data(
             )
 
     return landsat_item._data["id"]
-
-
-if __name__ == "__main__":
-    download_landsat_data()
