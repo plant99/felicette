@@ -8,6 +8,7 @@ from rich import print as rprint
 from felicette.utils.color import color
 from felicette.utils.gdal_pansharpen import gdal_pansharpen
 from felicette.utils.file_manager import file_paths_wrt_id
+from felicette.utils.image_processing_utils import process_sat_image
 
 # increase PIL image processing pixels count limit
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
@@ -73,10 +74,10 @@ def process_landsat_data(id, bands=[2, 3, 4]):
         {"photometric": "RGB"},
     )
 
-    # save as jpeg image
-    im = Image.open(paths["output_path"])
-    im.save(paths["output_path_jpeg"], "JPEG", quality=100)
+    # resize and save as jpeg image
     print("Generated 🌍 images!🎉")
+    rprint("[yellow]Please wait while I resize and crop the image :\) [/yellow]")
+    process_sat_image(paths["output_path"], paths["output_path_jpeg"])
     rprint("[blue]GeoTIFF saved at:[/blue]")
     print(paths["output_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
