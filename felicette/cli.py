@@ -22,7 +22,14 @@ from felicette.sat_processor import process_landsat_data
     is_flag=True,
     help="Enhance image with panchromatic band",
 )
-def main(coordinates, location_name, pan_enhancement):
+@click.option(
+    "-pre",
+    "--preview-image",
+    default=False,
+    is_flag=True,
+    help="Preview pre-processed low resolution RGB satellite image.",
+)
+def main(coordinates, location_name, pan_enhancement, preview_image):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:
         click.echo("Please specify either --coordinates or --location-name")
