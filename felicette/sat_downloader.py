@@ -3,6 +3,7 @@ import sys
 from rich import print as rprint
 
 from felicette.utils.geo_utils import get_tiny_bbox
+from felicette.utils.sys_utils import exit_cli
 from felicette.constants import band_tag_map
 from felicette.utils.file_manager import save_to_file, data_file_exists, file_paths_wrt_id
 
@@ -41,7 +42,17 @@ def preview_landsat_image(landsat_item):
             "[green] ✓ ",
             "required data exists for preview image"
         )
+    # print success info
+    rprint("[blue]Preview image saved at:[/blue]")
+    print(paths["preview"])
     # prompt a confirm option
+    response = input("Are you sure you want to see an enhanced version of the image at the path shown above? [y/n]")
+    if response in ["n", "N"]:
+        exit_cli("Why not try a different location next time? I'd suggest [link=https://en.wikipedia.org/wiki/Svalbard]Svalbard[/link] :)")
+    elif response in ["y", "Y"]:
+        return None
+    else:
+        exit_cli("[red]Sorry, invalid response. Exiting :([/red]")
 
 def download_landsat_data(landsat_item, bands=[2, 3, 4, 8]):
 
