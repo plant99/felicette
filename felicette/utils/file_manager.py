@@ -16,10 +16,10 @@ def check_sat_path(id):
         os.mkdir(data_path)
 
 
-def save_to_file(url, filename, id):
+def save_to_file(url, filename, id, info_message):
     data_path = os.path.join(workdir, id)
-    data_id = filename.split("-")[1].split(".")[0]
-    rprint("✗ required data doesn't exist, downloading", band_tag_map[data_id], "band")
+    data_id = filename.split("/")[-1].split("-")[1].split(".")[0]
+    rprint(info_message)
     file_path = os.path.join(data_path, filename)
     response = requests.get(url, stream=True)
     with tqdm.wrapattr(
@@ -34,16 +34,15 @@ def save_to_file(url, filename, id):
     fout.close()
 
 
-def data_file_exists(filename, id):
-    data_path = os.path.join(workdir, id)
-    file_path = os.path.join(data_path, filename)
-    return os.path.exists(file_path)
+def data_file_exists(filename):
+    return os.path.exists(filename)
 
 
 def file_paths_wrt_id(id):
     home_path_id = os.path.join(workdir, id)
     return {
         "base": home_path_id,
+        "preview": os.path.join(home_path_id, "%s-preview.jpg" % (id)),
         "b4": os.path.join(home_path_id, "%s-b4.tiff" % (id)),
         "b3": os.path.join(home_path_id, "%s-b3.tiff" % (id)),
         "b2": os.path.join(home_path_id, "%s-b2.tiff" % (id)),
