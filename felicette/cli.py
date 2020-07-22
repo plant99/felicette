@@ -2,7 +2,7 @@ import click
 import sys
 
 from felicette.utils.geo_utils import geocoder_util
-from felicette.sat_downloader import download_landsat_data
+from felicette.sat_downloader import download_landsat_data, search_landsat_data
 from felicette.sat_processor import process_landsat_data
 
 
@@ -37,13 +37,16 @@ def main(coordinates, location_name, pan_enhancement, preview_image):
     if location_name:
         coordinates = geocoder_util(location_name)
 
+    # unless specified, cloud_cover_lt is 10
+    landsat_item = search_landsat_data(coordinates, 10)
+
     # set bands to process
     bands = [2, 3, 4]
     if pan_enhancement:
         bands.append(8)
 
     # download data
-    data_id = download_landsat_data(coordinates, bands)
+    data_id = download_landsat_data(landsat_item, bands)
     # process data
     process_landsat_data(data_id, bands)
 

@@ -28,9 +28,8 @@ def search_landsat_data(coordinates, cloud_cover_lt):
 
 
 def download_landsat_data(
-    coordinates=(85.8245, 20.2961), bands=[2, 3, 4, 8], cloud_cover_lt=10
+    landsat_item, bands=[2, 3, 4, 8]
 ):
-    landsat_item = search_landsat_data(coordinates, cloud_cover_lt)
     # check if directory exists to save the data for this product id
     check_sat_path(landsat_item._data["id"])
 
