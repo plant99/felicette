@@ -4,7 +4,7 @@ from rich import print as rprint
 
 from felicette.utils.geo_utils import get_tiny_bbox
 from felicette.constants import band_tag_map
-from felicette.utils.file_manager import save_to_file, data_file_exists, check_sat_path
+from felicette.utils.file_manager import save_to_file, data_file_exists, file_paths_wrt_id
 
 
 def search_landsat_data(coordinates, cloud_cover_lt):
@@ -26,21 +26,36 @@ def search_landsat_data(coordinates, cloud_cover_lt):
     landsat_item = search_items[0]
     return landsat_item
 
+def preview_landsat_image(landsat_item):
+    paths = file_paths_wrt_id(landsat_item._data["id"])
+    # download image and save it in directory
+    if not data_file_exists(paths["preview"]):
+        save_to_file(
+            landsat_item.assets["thumbnail"]["href"],
+            paths["preview"],
+            landsat_item._data["id"],
+            "✗ preview data doesn't exist, downloading image"
+        )
+    else:
+        rprint(
+            "[green] ✓ ",
+            "required data exists for preview image"
+        )
+    # prompt a confirm option
 
-def download_landsat_data(
-    landsat_item, bands=[2, 3, 4, 8]
-):
-    # check if directory exists to save the data for this product id
-    check_sat_path(landsat_item._data["id"])
+def download_landsat_data(landsat_item, bands=[2, 3, 4, 8]):
 
+    # get paths w.r.t. id
+    paths = file_paths_wrt_id(landsat_item._data["id"])
     # save bands generically
     for band in bands:
-        band_filename = landsat_item._data["id"] + "-b{}.tiff".format(band)
-        if not data_file_exists(band_filename, landsat_item._data["id"]):
+        band_filename = paths["b%s" % band]
+        if not data_file_exists(band_filename):
             save_to_file(
                 landsat_item.assets["B{}".format(band)]["href"],
                 band_filename,
                 landsat_item._data["id"],
+                "✗ required data doesn't exist, downloading", band_tag_map[band], "band"
             )
         else:
             rprint(
