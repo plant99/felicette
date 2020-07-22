@@ -2,9 +2,9 @@ import click
 import sys
 
 from felicette.utils.geo_utils import geocoder_util
-from felicette.sat_downloader import download_landsat_data, search_landsat_data
+from felicette.utils.file_manager import check_sat_path
+from felicette.sat_downloader import download_landsat_data, search_landsat_data, preview_landsat_image
 from felicette.sat_processor import process_landsat_data
-
 
 @click.command()
 @click.option(
@@ -39,6 +39,14 @@ def main(coordinates, location_name, pan_enhancement, preview_image):
 
     # unless specified, cloud_cover_lt is 10
     landsat_item = search_landsat_data(coordinates, 10)
+
+
+    # check if directory exists to save the data for this product id
+    check_sat_path(landsat_item._data["id"])
+
+    # if preview option is set, download and preview image
+    if preview_image:
+        preview_landsat_image(landsat_item)
 
     # set bands to process
     bands = [2, 3, 4]
