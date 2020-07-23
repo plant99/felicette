@@ -14,6 +14,26 @@ from felicette.utils.image_processing_utils import process_sat_image
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
+def process_landsat_ndvi(id, bands=[4,5]):
+    band4 = rasterio.open('LC81430542020100-b4.tiff') #red
+    band5 = rasterio.open('LC81430542020100-b5.tiff') #nir
+
+    #generate nir and red objects as arrays in float64 format
+    red = band4.read(1).astype('float64')
+    nir = band5.read(1).astype('float64')
+
+    ndvi = (nir - red) / (nir+red)
+    #export ndvi image
+    ndvi_image = rasterio.open('ndvi.tiff','w',driver='Gtiff',
+                              width=band4.width,
+                              height = band4.height,
+                              count=1, crs=band4.crs,
+                              transform=band4.transform,
+                              dtype='float64')
+    ndvi_image.write(ndvi,1)
+    ndvi_image.close()
+
+
 def process_landsat_data(id, bands=[2, 3, 4]):
 
     # get paths of files related to this id
