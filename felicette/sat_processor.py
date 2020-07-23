@@ -90,6 +90,7 @@ def process_landsat_vegetation(id, bands):
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["vegetation_path_jpeg"])
 
+
 def process_landsat_rgb(id, bands):
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
