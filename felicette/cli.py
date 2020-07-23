@@ -29,7 +29,13 @@ from felicette.sat_processor import process_landsat_data
     is_flag=True,
     help="Preview pre-processed low resolution RGB satellite image.",
 )
-def main(coordinates, location_name, pan_enhancement, preview_image):
+@click.option(
+    "--ndvi",
+    default=False,
+    is_flag=True,
+    help="Show NDVI image to highlight vegetation",
+)
+def main(coordinates, location_name, pan_enhancement, preview_image, ndvi):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:
         click.echo("Please specify either --coordinates or --location-name")
@@ -52,6 +58,9 @@ def main(coordinates, location_name, pan_enhancement, preview_image):
     bands = [2, 3, 4]
     if pan_enhancement:
         bands.append(8)
+
+    if ndvi:
+        bands = [4, 5]
 
     # download data
     data_id = download_landsat_data(landsat_item, bands)
