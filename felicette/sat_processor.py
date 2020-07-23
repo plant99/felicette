@@ -14,28 +14,83 @@ from felicette.utils.image_processing_utils import process_sat_image
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
-def process_landsat_ndvi(id, bands=[4,5]):
-    band4 = rasterio.open('LC81430542020100-b4.tiff') #red
-    band5 = rasterio.open('LC81430542020100-b5.tiff') #nir
+def process_landsat_vegetation(id, bands):
+    # band4 = rasterio.open('LC81430542020100-b4.tiff') #red
+    # band5 = rasterio.open('LC81430542020100-b5.tiff') #nir
 
-    #generate nir and red objects as arrays in float64 format
-    red = band4.read(1).astype('float64')
-    nir = band5.read(1).astype('float64')
+    # #generate nir and red objects as arrays in float64 format
+    # red = band4.read(1).astype('float64')
+    # nir = band5.read(1).astype('float64')
 
-    ndvi = (nir - red) / (nir+red)
-    #export ndvi image
-    ndvi_image = rasterio.open('ndvi.tiff','w',driver='Gtiff',
-                              width=band4.width,
-                              height = band4.height,
-                              count=1, crs=band4.crs,
-                              transform=band4.transform,
-                              dtype='float64')
-    ndvi_image.write(ndvi,1)
-    ndvi_image.close()
+    # ndvi = (nir - red) / (nir+red)
+    # #export ndvi image
+    # ndvi_image = rasterio.open('ndvi.tiff','w',driver='Gtiff',
+    #                           width=band4.width,
+    #                           height = band4.height,
+    #                           count=1, crs=band4.crs,
+    #                           transform=band4.transform,
+    #                           dtype='float64')
+    # ndvi_image.write(ndvi,1)
+    # ndvi_image.close()
 
+    # get paths of files related to this id
+    paths = file_paths_wrt_id(id)
 
-def process_landsat_data(id, bands=[2, 3, 4]):
+    # stack NIR, R, G bands
 
+    # open files from the paths, and save it as stack
+    b5 = rio.open(paths["b5"])
+    b4 = rio.open(paths["b4"])
+    b3 = rio.open(paths["b3"])
+
+    # read as numpy ndarrays
+    nir = b5.read(1)
+    r = b4.read(1)
+    g = b3.read(1)
+
+    with rio.open(
+        paths["stack"],
+        "w",
+        driver="Gtiff",
+        width=b4.width,
+        height=b4.height,
+        count=3,
+        crs=b4.crs,
+        transform=b4.transform,
+        dtype=b4.dtypes[0],
+        photometric="RGB",
+    ) as rgb:
+        rgb.write(nir, 1)
+        rgb.write(r, 2)
+        rgb.write(g, 3)
+        rgb.close()
+
+    source_path_for_rio_color = paths["stack"]
+
+    rprint("Let's make our 🌍 imagery a bit more colorful for a human eye!")
+    # apply rio-color correction
+    ops_string = "sigmoidal rgb 20 0.2"
+    # refer to felicette.utils.color.py to see the parameters of this function
+    # Bug: number of jobs if greater than 1, fails the job
+    color(
+        1,
+        "uint16",
+        source_path_for_rio_color,
+        paths["vegetation_path"],
+        ops_string.split(","),
+        {"photometric": "RGB"},
+    )
+
+    # resize and save as jpeg image
+    print("Generated 🌍 images!🎉")
+    rprint("[yellow]Please wait while I resize and crop the image :) [/yellow]")
+    process_sat_image(paths["vegetation_path"], paths["vegetation_path_jpeg"])
+    rprint("[blue]GeoTIFF saved at:[/blue]")
+    print(paths["vegetation_path"])
+    rprint("[blue]JPEG image saved at:[/blue]")
+    print(paths["vegetation_path_jpeg"])
+
+def process_landsat_rgb(id, bands):
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
 
@@ -102,3 +157,11 @@ def process_landsat_data(id, bands=[2, 3, 4]):
     print(paths["output_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["output_path_jpeg"])
+
+
+def process_landsat_data(id, bands):
+
+    if bands == [2, 3, 4]:
+        process_landsat_rgb(id, bands)
+    elif bands == [3, 4, 5]:
+        process_landsat_vegetation(id, bands)
