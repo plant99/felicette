@@ -76,7 +76,7 @@ def process_landsat_data(id, bands=[2, 3, 4]):
 
     # resize and save as jpeg image
     print("Generated 🌍 images!🎉")
-    rprint("[yellow]Please wait while I resize and crop the image :\) [/yellow]")
+    rprint("[yellow]Please wait while I resize and crop the image :) [/yellow]")
     process_sat_image(paths["output_path"], paths["output_path_jpeg"])
     rprint("[blue]GeoTIFF saved at:[/blue]")
     print(paths["output_path"])
