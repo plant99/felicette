@@ -54,4 +54,8 @@ def file_paths_wrt_id(id):
         "output_path_jpeg": os.path.join(
             home_path_id, "%s-color-processed.jpeg" % (id)
         ),
+        "vegetation_path": os.path.join(home_path_id, "%s-vegetation.tiff" % (id)),
+        "vegetation_path_jpeg": os.path.join(
+            home_path_id, "%s-vegetation.jpeg" % (id)
+        ),
     }
