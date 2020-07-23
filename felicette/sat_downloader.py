@@ -57,7 +57,7 @@ def preview_landsat_image(landsat_item):
     response = input("Are you sure you want to see an enhanced version of the image at the path shown above? [Y/n]")
     return handle_prompt_response(response)
 
-def download_landsat_data(landsat_item, bands=[2, 3, 4, 8]):
+def download_landsat_data(landsat_item, bands):
 
     # get paths w.r.t. id
     paths = file_paths_wrt_id(landsat_item._data["id"])
@@ -69,7 +69,7 @@ def download_landsat_data(landsat_item, bands=[2, 3, 4, 8]):
                 landsat_item.assets["B{}".format(band)]["href"],
                 band_filename,
                 landsat_item._data["id"],
-                "✗ required data doesn't exist, downloading", band_tag_map[band], "band"
+                "✗ required data doesn't exist, downloading %s %s" % (band_tag_map["b" + str(band)], "band")
             )
         else:
             rprint(
