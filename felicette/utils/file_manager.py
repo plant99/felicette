@@ -43,6 +43,7 @@ def file_paths_wrt_id(id):
     return {
         "base": home_path_id,
         "preview": os.path.join(home_path_id, "%s-preview.jpg" % (id)),
+        "b5": os.path.join(home_path_id, "%s-b5.tiff" % (id)),
         "b4": os.path.join(home_path_id, "%s-b4.tiff" % (id)),
         "b3": os.path.join(home_path_id, "%s-b3.tiff" % (id)),
         "b2": os.path.join(home_path_id, "%s-b2.tiff" % (id)),
