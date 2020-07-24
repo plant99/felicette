@@ -20,7 +20,7 @@ dependencies = [
 
 setup(
     name="felicette",
-    version="0.1.0",
+    version="0.1.1",
     url="https://github.com/plant99/felicette",
     license="BSD",
     author="Shivashis Padhi",
