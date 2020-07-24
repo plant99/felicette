@@ -162,7 +162,7 @@ def process_landsat_rgb(id, bands):
 
 def process_landsat_data(id, bands):
 
-    if bands == [2, 3, 4]:
+    if bands == [2, 3, 4] or bands == [2, 3, 4, 8]:
         process_landsat_rgb(id, bands)
     elif bands == [3, 4, 5]:
         process_landsat_vegetation(id, bands)
