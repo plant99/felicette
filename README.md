@@ -79,24 +79,24 @@ Felicette can download and process Landsat images taking the location's input as
 
 With location name:
 
-  $ felicette -l "Svalbard"
+    $ felicette -l "Svalbard"
 
 With coordinates:
 
-  $ felicette -c 20.9752 77.8750
+    $ felicette -c 20.9752 77.8750
 
 `-p` option uses the panchromatic band to enhance image's resolution to 15 meters, contrary to resolution of RGB bands(30 meters). 
 To get a better image using felicette use:
 
-  $ felicette -p -c 20.9752 77.8750
+    $ felicette -p -c 20.9752 77.8750
 
 `-pre` option downloads a low-res image for preview, to check if the image is worth your computation, Network I/O. :)
 
-  $ felicette -pre -p -c 20.9752 77.8750
+    $ felicette -pre -p -c 20.9752 77.8750
   
 `-v` option generates a [CIR](https://eos.com/color-infrared/) image to highlight vegetation in 'red' color. Note that, '-p' option isn't taken into consideration while generating CIR imagery in felicette.
 
-  $ felicette -pre -v -l "Svalbard"
+    $ felicette -pre -v -l "Svalbard"
   
 
 -------------------------
