@@ -100,7 +100,6 @@ To get a better image using felicette use:
   
 
 -------------------------
-
 ### Feli.. what?
 
 ![Félicette](https://i.imgur.com/q4G5ThZ.jpg)
@@ -109,3 +108,11 @@ To get a better image using felicette use:
 Félicette was the first cat launched into space, on 18 October 1963. Even though she landed back on earth safely, Félicette was euthanized two months after the launch so that scientists could perform a necropsy to examine her brain. She was the only cat to have survived spaceflight. [Here's](https://www.youtube.com/watch?v=v-tpmvGRoyw) a footage of the mission from the archives.
 
 When you get a satellite imagery using this tool, imagine Félicette took the picture for you :)) 
+
+-------------------------
+### Preview and examples
+[Here](
+https://drive.google.com/drive/folders/1QxJUaCt_MDE7LAdh9znTP7796JXAHKhU?usp=sharing) is a link to the images generated with RGB, CIR options.
+
+Following is a recording of the terminal session recording usage of `felicette`.
+[![asciicast](https://asciinema.org/a/IoiUnkJ1IcXtsj81hjrmSpZi5.png)](https://asciinema.org/a/IoiUnkJ1IcXtsj81hjrmSpZi5)
