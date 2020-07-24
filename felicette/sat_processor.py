@@ -9,29 +9,13 @@ from felicette.utils.color import color
 from felicette.utils.gdal_pansharpen import gdal_pansharpen
 from felicette.utils.file_manager import file_paths_wrt_id
 from felicette.utils.image_processing_utils import process_sat_image
+from felicette.utils.sys_utils import display_file
 
 # increase PIL image processing pixels count limit
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
 def process_landsat_vegetation(id, bands):
-    # band4 = rasterio.open('LC81430542020100-b4.tiff') #red
-    # band5 = rasterio.open('LC81430542020100-b5.tiff') #nir
-
-    # #generate nir and red objects as arrays in float64 format
-    # red = band4.read(1).astype('float64')
-    # nir = band5.read(1).astype('float64')
-
-    # ndvi = (nir - red) / (nir+red)
-    # #export ndvi image
-    # ndvi_image = rasterio.open('ndvi.tiff','w',driver='Gtiff',
-    #                           width=band4.width,
-    #                           height = band4.height,
-    #                           count=1, crs=band4.crs,
-    #                           transform=band4.transform,
-    #                           dtype='float64')
-    # ndvi_image.write(ndvi,1)
-    # ndvi_image.close()
 
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
@@ -89,6 +73,8 @@ def process_landsat_vegetation(id, bands):
     print(paths["vegetation_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["vegetation_path_jpeg"])
+    # display generated image
+    display_file(paths["vegetation_path_jpeg"])
 
 
 def process_landsat_rgb(id, bands):
@@ -158,7 +144,8 @@ def process_landsat_rgb(id, bands):
     print(paths["output_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["output_path_jpeg"])
-
+    # display generated image
+    display_file(paths["output_path_jpeg"])
 
 def process_landsat_data(id, bands):
 
