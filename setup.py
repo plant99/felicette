@@ -15,7 +15,6 @@ dependencies = [
     "rasterio==1.1.5",
     "rio-color==1.0.0",
     "pillow==7.2.0",
-    "GDAL==3.1.2",
     "opencv-python==4.3.0.36"
 ]
 
