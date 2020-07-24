@@ -8,6 +8,7 @@ from felicette.sat_downloader import (
     search_landsat_data,
     preview_landsat_image,
 )
+from felicette.utils.sys_utils import exit_cli
 from felicette.sat_processor import process_landsat_data
 
 
@@ -44,8 +45,7 @@ from felicette.sat_processor import process_landsat_data
 def main(coordinates, location_name, pan_enhancement, preview_image, vegetation):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:
-        click.echo("Please specify either --coordinates or --location-name")
-        sys.exit(1)
+        exit_cli("Please specify either --coordinates or --location-name")
     if location_name:
         coordinates = geocoder_util(location_name)
 
@@ -66,6 +66,8 @@ def main(coordinates, location_name, pan_enhancement, preview_image, vegetation)
 
     if vegetation:
         bands = [3, 4, 5]
+
+    # NB: can't enable pan-enhancement with vegetation
 
     # download data
     data_id = download_landsat_data(landsat_item, bands)

@@ -37,8 +37,7 @@ def search_landsat_data(coordinates, cloud_cover_lt):
 
     search_items = search.items()
     if not len(search_items):
-        print("No data matched your search, please try different parameters.")
-        sys.exit(0)
+        exit_cli("No data matched your search, please try different parameters.")
     landsat_item = search_items[0]
     return landsat_item
 
