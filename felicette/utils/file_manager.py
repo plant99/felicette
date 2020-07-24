@@ -13,7 +13,7 @@ def check_sat_path(id):
     data_path = os.path.join(workdir, id)
 
     if not os.path.exists(data_path):
-        os.mkdir(data_path)
+        os.makedirs(data_path, exist_ok=True)
 
 
 def save_to_file(url, filename, id, info_message):
