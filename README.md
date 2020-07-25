@@ -6,7 +6,7 @@ Satellite imagery for dummies.
 
 ### Who should use this tool?
 
-TL;DR: Generate JPEG earth imagery from coordinates/location name
+TL;DR: Generate JPEG earth imagery from a location's name/coordinates
 
 This tool is for a sentient being who wants to view high-res satellite imagery of earth, without digging through all the nitty gritty geospatial details of it. So if this is your first time trying to explore how parts of the Earth looks from space, you're at the right place.
 
