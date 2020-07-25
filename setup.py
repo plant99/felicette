@@ -7,6 +7,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 dependencies = [
+    "numpy==1.19.1",
     "click==7.1.2",
     "requests==2.24.0",
     "sat-search==0.2.3",
