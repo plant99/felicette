@@ -128,4 +128,4 @@ When you get a satellite imagery using this tool, imagine Félicette took the pi
 https://drive.google.com/drive/folders/1QxJUaCt_MDE7LAdh9znTP7796JXAHKhU?usp=sharing) is a link to the original images generated with RGB, CIR options.
 
 Following is a recording of the terminal session recording usage of `felicette`.
-![asciicast](https://asciinema.org/a/IoiUnkJ1IcXtsj81hjrmSpZi5.png)](https://asciinema.org/a/IoiUnkJ1IcXtsj81hjrmSpZi5)
+[![asciicast](https://asciinema.org/a/349495.png)](https://asciinema.org/a/349495)
