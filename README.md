@@ -9,7 +9,7 @@ Satellite imagery for dummies.
 
 TL;DR: Generate JPEG earth imagery from coordinates/location name with publicly available satellite data.
 
-This tool is for a sentient being who wants to view high-res satellite imagery of earth, without digging through all the nitty gritty geospatial details of it. So if this is your first time trying to explore how parts of the Earth looks from space, you're at the right place.
+This tool is for a sentient being who wants to view high-res satellite imagery of earth, without digging through all the nitty gritty geospatial details of it. So if this is your first time trying to explore how parts of the Earth look from space, you're at the right place.
 
 NB: `felicette` at the present state searches for cloud-cover < 10%, and doesn't constrain results on the basis of dates. 
 
@@ -47,6 +47,14 @@ $ gdal-config --version
 $ pip install numpy GDAL==<version-number>
 $ pip install felicette
 ```
+
+#### Docker
+
+As pointed out [here](https://news.ycombinator.com/item?id=23951167), the following docker image works and is volume-mapped to the present working directory. 
+
+    $ docker run -it -v "$PWD"/felicette-data:/root/felicette-data milhouse1337/felicette felicette -l "Montreal"
+
+Thanks [@milhouse1337](https://hub.docker.com/u/milhouse1337) for the docker-image.
 
 #### "Why you no make a section for Windows?" :|
 
