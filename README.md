@@ -1,4 +1,5 @@
 
+
 # felicette
 
 Satellite imagery for dummies.
@@ -11,10 +12,12 @@ This tool is for a sentient being who wants to view high-res satellite imagery o
 
 NB: `felicette` at the present state searches for cloud-cover < 10%, and doesn't constrain results on the basis of dates. 
 
+One can see [Product Roadmap](https://github.com/plant99/felicette/wiki/Product-Roadmap) for upcoming features.
+
 ### Installation
 
 `felicette` depends on GDAL. But the following steps cover GDAL's installation as well.
-
+`rio-color` uses numpy headers to setup, thus installing numpy and GDAL=={ogrinfo --version} would be sufficient before installing felicette.
 #### Debian 
 ```
 $ sudo add-apt-repository ppa:ubuntugis/ppa
@@ -25,7 +28,7 @@ $ gdal-config --version
  
 * activate virtual environment *
 
-$ pip install GDAL==<version-number>
+$ pip install numpy GDAL==<version-number>
 $ pip install felicette
 
 ```
@@ -38,7 +41,7 @@ $ gdal-config --version
 
 * activate virtual environment *
 
-$ pip install GDAL==<version-number>
+$ pip install numpy GDAL==<version-number>
 $ pip install felicette
 ```
 
