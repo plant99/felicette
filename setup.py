@@ -7,7 +7,6 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 dependencies = [
-    "numpy==1.19.1",
     "click==7.1.2",
     "requests==2.24.0",
     "sat-search==0.2.3",
@@ -19,9 +18,11 @@ dependencies = [
     "opencv-python==4.3.0.36"
 ]
 
+setup_dependencies = ['numpy>=1.7']
+
 setup(
     name="felicette",
-    version="0.1.2",
+    version="0.1.4",
     url="https://github.com/plant99/felicette",
     license="BSD",
     author="Shivashis Padhi",
@@ -32,6 +33,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     platforms="any",
+    setup_requires=setup_dependencies,
     install_requires=dependencies,
     entry_points={"console_scripts": ["felicette = felicette.cli:main",],},
     classifiers=[
