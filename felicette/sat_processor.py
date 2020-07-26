@@ -147,6 +147,7 @@ def process_landsat_rgb(id, bands):
     # display generated image
     display_file(paths["output_path_jpeg"])
 
+
 def process_landsat_data(id, bands):
 
     if bands == [2, 3, 4] or bands == [2, 3, 4, 8]:
