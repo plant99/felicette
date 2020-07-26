@@ -108,6 +108,11 @@ To get a better image using felicette use:
 `-v` option generates a [CIR](https://eos.com/color-infrared/) image to highlight vegetation in 'red' color. Note that, '-p' option isn't taken into consideration while generating CIR imagery in felicette.
 
     $ felicette  -v -l "Kanyakumari"
+
+-------------------------
+### Latest release
+
+[0.1.10](https://github.com/plant99/felicette/releases/tag/0.1.10)
   
 
 -------------------------
