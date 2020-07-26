@@ -1,6 +1,3 @@
-
-
-
 # felicette
 
 Satellite imagery for dummies.
