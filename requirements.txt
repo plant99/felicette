@@ -1,4 +1,3 @@
-numpy==1.19.1
 click==7.1.2
 requests==2.24.0
 sat-search==0.2.3
