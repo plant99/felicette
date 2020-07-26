@@ -1,16 +1,22 @@
 import click
 import sys
+from rasterio.errors import RasterioIOError
 
 from felicette.utils.geo_utils import geocoder_util
-from felicette.utils.file_manager import check_sat_path
+from felicette.utils.file_manager import check_sat_path, file_paths_wrt_id
 from felicette.sat_downloader import (
     download_landsat_data,
     search_landsat_data,
     preview_landsat_image,
 )
-from felicette.utils.sys_utils import exit_cli
+from felicette.utils.sys_utils import exit_cli, remove_dir
 from felicette.sat_processor import process_landsat_data
 
+def trigger_download_and_processing(landsat_item, bands):
+    # download data
+    data_id = download_landsat_data(landsat_item, bands)
+    # process data
+    process_landsat_data(data_id, bands)
 
 @click.command()
 @click.option(
@@ -68,10 +74,19 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation):
 
     # NB: can't enable pan-enhancement with vegetation
 
-    # download data
-    data_id = download_landsat_data(landsat_item, bands)
-    # process data
-    process_landsat_data(data_id, bands)
+    try:
+        trigger_download_and_processing(landsat_item, bands)
+    except RasterioIOError:
+        response = input("Local data for this location is corrupted, felicette will remove existing data to proceed, are you sure? [Y/n]")
+        if response in ["y", "Y", ""]:
+            # remove file dir
+            file_paths = file_paths_wrt_id(landsat_item._data["id"])
+            remove_dir(file_paths["base"])
+            # retry downloading and processing image with a clean directory
+            trigger_download_and_processing(landsat_item, bands)
+        elif response in ["n", "N"]:
+            exit_cli(print, "")
+
 
 
 if __name__ == "__main__":
