@@ -14,7 +14,7 @@ One can see [Product Roadmap](https://github.com/plant99/felicette/wiki/Product-
 
 ### Installation
 
-`felicette` depends on GDAL. But the following steps cover GDAL's installation as well.
+`felicette` depends on [GDAL](https://gdal.org/). But the following steps cover GDAL's installation as well.
 
 `rio-color` uses numpy headers to setup, thus installing numpy and GDAL=={ogrinfo --version} would be sufficient before installing felicette.
 
