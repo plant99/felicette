@@ -137,3 +137,9 @@ https://drive.google.com/drive/folders/1QxJUaCt_MDE7LAdh9znTP7796JXAHKhU?usp=sha
 
 Following is a recording of the terminal session recording usage of `felicette`.
 [![asciicast](https://asciinema.org/a/349495.png)](https://asciinema.org/a/349495)
+
+-------------------------
+### Contributing
+
+`felicette` is open-source and welcomes all kinds of contributions, be it documentation/wiki pages/bug-fixes/development of new features.
+A small contributors' guide is available [here](https://github.com/plant99/felicette/wiki/Contributors-Guide). 
