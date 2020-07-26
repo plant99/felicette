@@ -45,7 +45,7 @@ from felicette.sat_processor import process_landsat_data
 def main(coordinates, location_name, pan_enhancement, preview_image, vegetation):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:
-        exit_cli("Please specify either --coordinates or --location-name")
+        exit_cli(print, "Please specify either --coordinates or --location-name")
     if location_name:
         coordinates = geocoder_util(location_name)
 

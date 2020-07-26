@@ -1,5 +1,5 @@
 import requests
-
+from felicette.utils.sys_utils import exit_cli
 
 def find_first_landsat(items):
     for index, item in enumerate(items):
@@ -15,6 +15,9 @@ def geocoder_util(location_name):
         )
     )
     r_json = r.json()
+    if len(r_json) == 0:
+        exit_cli(print, "Oops, couldn't geocode this location's name. Could you please try with coordinates(-c) option?")
+
     # return lat, lon
     return (float(r_json[0]["lon"]), float(r_json[0]["lat"]))
 

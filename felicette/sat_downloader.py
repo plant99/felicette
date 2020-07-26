@@ -15,12 +15,13 @@ from felicette.utils.file_manager import (
 def handle_prompt_response(response):
     if response in ["n", "N"]:
         exit_cli(
+            rprint,
             "Why not try a different location next time? I'd suggest [link=https://en.wikipedia.org/wiki/Svalbard]Svalbard[/link] :)"
         )
     elif response in ["y", "Y", ""]:
         return None
     else:
-        exit_cli("[red]Sorry, invalid response. Exiting :([/red]")
+        exit_cli(rprint, "[red]Sorry, invalid response. Exiting :([/red]")
 
 
 def search_landsat_data(coordinates, cloud_cover_lt):
@@ -37,7 +38,7 @@ def search_landsat_data(coordinates, cloud_cover_lt):
 
     search_items = search.items()
     if not len(search_items):
-        exit_cli("No data matched your search, please try different parameters.")
+        exit_cli(print, "No data matched your search, please try different parameters.")
     landsat_item = search_items[0]
     return landsat_item
 

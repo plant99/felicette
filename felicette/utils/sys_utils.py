@@ -1,10 +1,9 @@
 import sys
 import os
-from rich import print as rprint
 
 
-def exit_cli(message):
-    rprint("%s" % message)
+def exit_cli(print_func, message):
+    print_func("%s" % message)
     sys.exit(0)
 
 
