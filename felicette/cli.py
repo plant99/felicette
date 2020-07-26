@@ -29,8 +29,7 @@ from felicette.sat_processor import process_landsat_data
     help="Enhance image with panchromatic band",
 )
 @click.option(
-    "-pre",
-    "--preview-image",
+    "--no-preview",
     default=False,
     is_flag=True,
     help="Preview pre-processed low resolution RGB satellite image.",
@@ -42,7 +41,7 @@ from felicette.sat_processor import process_landsat_data
     is_flag=True,
     help="Show Color Infrared image to highlight vegetation",
 )
-def main(coordinates, location_name, pan_enhancement, preview_image, vegetation):
+def main(coordinates, location_name, pan_enhancement, no_preview, vegetation):
     """Satellite imagery for dummies."""
     if not coordinates and not location_name:
         exit_cli(print, "Please specify either --coordinates or --location-name")
@@ -56,7 +55,7 @@ def main(coordinates, location_name, pan_enhancement, preview_image, vegetation)
     check_sat_path(landsat_item._data["id"])
 
     # if preview option is set, download and preview image
-    if preview_image:
+    if not no_preview:
         preview_landsat_image(landsat_item)
 
     # set bands to process
