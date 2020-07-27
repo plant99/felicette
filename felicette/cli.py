@@ -1,6 +1,7 @@
 import click
 import sys
 from rasterio.errors import RasterioIOError
+import pkg_resources
 
 from felicette.utils.geo_utils import geocoder_util
 from felicette.utils.file_manager import check_sat_path, file_paths_wrt_id
@@ -47,8 +48,18 @@ def trigger_download_and_processing(landsat_item, bands):
     is_flag=True,
     help="Show Color Infrared image to highlight vegetation",
 )
-def main(coordinates, location_name, pan_enhancement, no_preview, vegetation):
+@click.option(
+    "-V",
+    "--version",
+    default=False,
+    is_flag=True,
+    help="Show the version number and quit",
+)
+def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, version):
     """Satellite imagery for dummies."""
+    if version:
+        version_no = pkg_resources.require("felicette")[0].version
+        exit_cli(print, f"felicette {version_no}.")
     if not coordinates and not location_name:
         exit_cli(print, "Please specify either --coordinates or --location-name")
     if location_name:
