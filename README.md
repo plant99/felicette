@@ -82,6 +82,7 @@ Options:
   -v, --vegetation            Show Color Infrared image to highlight
                               vegetation
 
+  -V, --version               Show the version number and quit
   --help                      Show this message and exit.
 
 ```
