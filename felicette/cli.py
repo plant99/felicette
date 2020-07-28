@@ -13,11 +13,13 @@ from felicette.sat_downloader import (
 from felicette.utils.sys_utils import exit_cli, remove_dir
 from felicette.sat_processor import process_landsat_data
 
+
 def trigger_download_and_processing(landsat_item, bands):
     # download data
     data_id = download_landsat_data(landsat_item, bands)
     # process data
     process_landsat_data(data_id, bands)
+
 
 @click.command()
 @click.option(
@@ -88,7 +90,9 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, ve
     try:
         trigger_download_and_processing(landsat_item, bands)
     except RasterioIOError:
-        response = input("Local data for this location is corrupted, felicette will remove existing data to proceed, are you sure? [Y/n]")
+        response = input(
+            "Local data for this location is corrupted, felicette will remove existing data to proceed, are you sure? [Y/n]"
+        )
         if response in ["y", "Y", ""]:
             # remove file dir
             file_paths = file_paths_wrt_id(landsat_item._data["id"])
@@ -97,7 +101,6 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, ve
             trigger_download_and_processing(landsat_item, bands)
         elif response in ["n", "N"]:
             exit_cli(print, "")
-
 
 
 if __name__ == "__main__":

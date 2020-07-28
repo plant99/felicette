@@ -16,7 +16,7 @@ def handle_prompt_response(response):
     if response in ["n", "N"]:
         exit_cli(
             rprint,
-            "Why not try a different location next time? I'd suggest [link=https://en.wikipedia.org/wiki/Svalbard]Svalbard[/link] :)"
+            "Why not try a different location next time? I'd suggest [link=https://en.wikipedia.org/wiki/Svalbard]Svalbard[/link] :)",
         )
     elif response in ["y", "Y", ""]:
         return None
