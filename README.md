@@ -49,6 +49,7 @@ $ pip install felicette
 
 As pointed out [here](https://news.ycombinator.com/item?id=23951167), the following docker image works and is volume-mapped to the present working directory. 
 
+    $ docker pull milhouse1337/felicette
     $ docker run -it -v "$PWD"/felicette-data:/root/felicette-data milhouse1337/felicette felicette -l "Montreal"
 
 Thanks [@milhouse1337](https://hub.docker.com/u/milhouse1337) for the docker-image.
