@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y \
     libgdal-dev \
     libsm6 \
     libxext6 \
-    libxrender-dev
+    libxrender-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --upgrade pip
 RUN pip install numpy GDAL==$(gdal-config --version)
