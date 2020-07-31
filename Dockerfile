@@ -8,7 +8,6 @@ ENV DEBIAN_FRONTEND noninteractive
 # RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
     python3-setuptools \
     python3-pip \
     python3-numpy \
