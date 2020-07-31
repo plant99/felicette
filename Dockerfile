@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:testing
 LABEL maintainer "Pascal Meunier @milhouse1337"
 
 # ENV TZ "America/Montreal"
