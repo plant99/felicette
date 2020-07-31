@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:buster
 LABEL maintainer "Pascal Meunier @milhouse1337"
 
 # ENV TZ "America/Montreal"
