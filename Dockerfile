@@ -19,7 +19,6 @@ RUN apt-get update && apt-get install -y \
     libxrender-dev \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --upgrade pip
 RUN pip3 install numpy "GDAL==$(gdal-config --version)"
 RUN pip3 install opencv-python
 RUN pip3 install felicette
