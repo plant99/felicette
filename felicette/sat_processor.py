@@ -10,7 +10,7 @@ from felicette.utils.gdal_pansharpen import gdal_pansharpen
 from felicette.utils.file_manager import file_paths_wrt_id
 from felicette.utils.image_processing_utils import process_sat_image
 from felicette.utils.sys_utils import display_file
-
+from felicette.sat_downloader import handle_img_prompt_response
 # increase PIL image processing pixels count limit
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
@@ -74,7 +74,11 @@ def process_landsat_vegetation(id, bands):
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["vegetation_path_jpeg"])
     # display generated image
-    display_file(paths["vegetation_path_jpeg"])
+    # display_file(paths["vegetation_path_jpeg"]
+    message="Do you want to have a look at the downloaded enhanced image with vegetation ? [Y/n]"
+    response_show_image = input(message)
+    handle_img_prompt_response(response_show_image,paths,"vegetation_path_jpeg",message)
+
 
 
 def process_landsat_rgb(id, bands):
@@ -145,7 +149,12 @@ def process_landsat_rgb(id, bands):
     rprint("[blue]JPEG image saved at:[/blue]")
     print(paths["output_path_jpeg"])
     # display generated image
-    display_file(paths["output_path_jpeg"])
+    # display_file(paths["output_path_jpeg"])
+    message="Do you want to have a look at the downloaded pan enhanced image? [Y/n]"
+    response_show_image = input(message)
+    handle_img_prompt_response(response_show_image,paths,"output_path_jpeg",message)
+
+
 
 
 def process_landsat_data(id, bands):
