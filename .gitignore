@@ -1,5 +1,5 @@
 *.pyc
-
+**/.vscode/
 dist/
 build/
 *.egg-info/

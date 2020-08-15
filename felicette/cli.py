@@ -12,6 +12,7 @@ from felicette.sat_downloader import (
 from felicette.utils.sys_utils import exit_cli, remove_dir
 from felicette.sat_processor import process_landsat_data
 
+
 def trigger_download_and_processing(landsat_item, bands):
     # download data
     data_id = download_landsat_data(landsat_item, bands)

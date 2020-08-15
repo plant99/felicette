@@ -1,7 +1,7 @@
 from satsearch import Search
 import sys
 from rich import print as rprint
-
+import logging
 from felicette.utils.geo_utils import get_tiny_bbox
 from felicette.utils.sys_utils import exit_cli
 from felicette.constants import band_tag_map
@@ -10,7 +10,7 @@ from felicette.utils.file_manager import (
     data_file_exists,
     file_paths_wrt_id,
 )
-
+from felicette.utils.sys_utils import display_file
 
 def handle_prompt_response(response):
     if response in ["n", "N"]:
@@ -23,6 +23,19 @@ def handle_prompt_response(response):
     else:
         exit_cli(rprint, "[red]Sorry, invalid response. Exiting :([/red]")
 
+def handle_img_prompt_response(response_show_image,paths,key):
+    if response_show_image in ["n", "N"]:
+        return None
+    elif response_show_image in ["y", "Y", ""]:
+        display_file(paths[str(key)])
+        return
+    else:
+        rprint("[red]Sorry, invalid response.([/red]")
+        response_show_image = input(
+        "Do you want to have a look at the downloaded preview image ? [Y/n]"
+        )
+        handle_img_prompt_response(response_show_image,paths,key)
+        return
 
 def search_landsat_data(coordinates, cloud_cover_lt):
     search = Search(
@@ -37,6 +50,7 @@ def search_landsat_data(coordinates, cloud_cover_lt):
     # improvement: filter by date, cloud cover here
 
     search_items = search.items()
+    print("Date at which picture was taken : " + str(search_items[0].date))
     if not len(search_items):
         exit_cli(print, "No data matched your search, please try different parameters.")
     landsat_item = search_items[0]
@@ -58,6 +72,11 @@ def preview_landsat_image(landsat_item):
     # print success info
     rprint("[blue]Preview image saved at:[/blue]")
     print(paths["preview"])
+    logging.info("preview imagery !!!")
+    response_show_image = input(
+        "Do you want to have a look at the downloaded preview image ? [Y/n]"
+    )
+    handle_img_prompt_response(response_show_image,paths,"preview")
     # prompt a confirm option
     response = input(
         "Are you sure you want to see an enhanced version of the image at the path shown above? [Y/n]"
