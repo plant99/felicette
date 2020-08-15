@@ -23,7 +23,9 @@ def handle_prompt_response(response):
     else:
         exit_cli(rprint, "[red]Sorry, invalid response. Exiting :([/red]")
 
+
 def handle_img_prompt_response(response_show_image,paths,key,message):
+
     if response_show_image in ["n", "N"]:
         return None
     elif response_show_image in ["y", "Y", ""]:
@@ -31,8 +33,10 @@ def handle_img_prompt_response(response_show_image,paths,key,message):
         return
     else:
         rprint("[red]Sorry, invalid response.([/red]")
+
         response_show_image = input(message)
         handle_img_prompt_response(response_show_image,paths,key,message)
+
         return
 
 def search_landsat_data(coordinates, cloud_cover_lt):
@@ -71,9 +75,11 @@ def preview_landsat_image(landsat_item):
     rprint("[blue]Preview image saved at:[/blue]")
     print(paths["preview"])
     logging.info("preview imagery !!!")
+
     message="Do you want to have a look at the downloaded preview image ? [Y/n]"
     response_show_image = input(message)
     handle_img_prompt_response(response_show_image,paths,"preview",message)
+
     # prompt a confirm option
     response = input(
         "Are you sure you want to see an enhanced version of the image at the path shown above? [Y/n]"
