@@ -23,13 +23,17 @@ def handle_prompt_response(response):
     else:
         exit_cli(rprint, "[red]Sorry, invalid response. Exiting :([/red]")
 
-
-def search_landsat_data(coordinates, cloud_cover_lt):
+def search_satellite_data(coordinates, cloud_cover_lt, product="landsat-8-l1"):
+    """
+    coordinates: bounding box's coordinates
+    cloud_cover_lt: maximum cloud cover
+    product: landsat-8-l1, sentinel-2-l1c
+    """
     search = Search(
         bbox=get_tiny_bbox(coordinates),
         query={
             "eo:cloud_cover": {"lt": cloud_cover_lt},
-            "collection": {"eq": "landsat-8-l1"},
+            "collection": {"eq": product},
         },
         sort=[{"field": "eo:cloud_cover", "direction": "asc"}],
     )
@@ -39,9 +43,10 @@ def search_landsat_data(coordinates, cloud_cover_lt):
     search_items = search.items()
     if not len(search_items):
         exit_cli(print, "No data matched your search, please try different parameters.")
-    landsat_item = search_items[0]
-    return landsat_item
 
+    # return the first result
+    item = search_items[0]
+    return item
 
 def preview_landsat_image(landsat_item):
     paths = file_paths_wrt_id(landsat_item._data["id"])

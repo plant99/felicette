@@ -7,7 +7,7 @@ from felicette.utils.geo_utils import geocoder_util
 from felicette.utils.file_manager import check_sat_path, file_paths_wrt_id
 from felicette.sat_downloader import (
     download_landsat_data,
-    search_landsat_data,
+    search_satellite_data,
     preview_landsat_image,
 )
 from felicette.utils.sys_utils import exit_cli, remove_dir
@@ -68,7 +68,7 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, ve
         coordinates = geocoder_util(location_name)
 
     # unless specified, cloud_cover_lt is 10
-    landsat_item = search_landsat_data(coordinates, 10)
+    landsat_item = search_satellite_data(coordinates, 10)
 
     # check if directory exists to save the data for this product id
     check_sat_path(landsat_item._data["id"])
