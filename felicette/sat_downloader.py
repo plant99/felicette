@@ -48,14 +48,14 @@ def search_satellite_data(coordinates, cloud_cover_lt, product="landsat-8-l1"):
     item = search_items[0]
     return item
 
-def preview_landsat_image(landsat_item):
-    paths = file_paths_wrt_id(landsat_item._data["id"])
+def preview_satellite_image(item):
+    paths = file_paths_wrt_id(item._data["id"])
     # download image and save it in directory
     if not data_file_exists(paths["preview"]):
         save_to_file(
-            landsat_item.assets["thumbnail"]["href"],
+            item.assets["thumbnail"]["href"],
             paths["preview"],
-            landsat_item._data["id"],
+            item._data["id"],
             "✗ preview data doesn't exist, downloading image",
         )
     else:

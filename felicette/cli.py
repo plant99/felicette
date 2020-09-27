@@ -8,7 +8,7 @@ from felicette.utils.file_manager import check_sat_path, file_paths_wrt_id
 from felicette.sat_downloader import (
     download_landsat_data,
     search_satellite_data,
-    preview_landsat_image,
+    preview_satellite_image,
 )
 from felicette.utils.sys_utils import exit_cli, remove_dir
 from felicette.sat_processor import process_landsat_data
@@ -75,7 +75,7 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, ve
 
     # if preview option is set, download and preview image
     if not no_preview:
-        preview_landsat_image(landsat_item)
+        preview_satellite_image(landsat_item)
 
     # set bands to process
     bands = [2, 3, 4]
