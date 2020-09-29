@@ -7,7 +7,7 @@ from rich import print as rprint
 
 from felicette.utils.color import color
 from felicette.utils.gdal_pansharpen import gdal_pansharpen
-from felicette.utils.file_manager import file_paths_wrt_id
+from felicette.utils.file_manager import file_paths_wrt_id, get_product_type_from_id
 from felicette.utils.image_processing_utils import process_sat_image
 from felicette.utils.sys_utils import display_file
 
@@ -15,7 +15,7 @@ from felicette.utils.sys_utils import display_file
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
 
 
-def process_landsat_vegetation(id, bands):
+def process_vegetation(id, bands, ops_string, angle_rotation=None):
 
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
@@ -53,7 +53,6 @@ def process_landsat_vegetation(id, bands):
 
     rprint("Let's make our 🌍 imagery a bit more colorful for a human eye!")
     # apply rio-color correction
-    ops_string = "sigmoidal rgb 20 0.2"
     # refer to felicette.utils.color.py to see the parameters of this function
     # Bug: number of jobs if greater than 1, fails the job
     color(
@@ -68,7 +67,7 @@ def process_landsat_vegetation(id, bands):
     # resize and save as jpeg image
     print("Generated 🌍 images!🎉")
     rprint("[yellow]Please wait while I resize and crop the image :) [/yellow]")
-    process_sat_image(paths["vegetation_path"], paths["vegetation_path_jpeg"])
+    process_sat_image(paths["vegetation_path"], paths["vegetation_path_jpeg"], rotate=angle_rotation)
     rprint("[blue]GeoTIFF saved at:[/blue]")
     print(paths["vegetation_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
@@ -77,7 +76,7 @@ def process_landsat_vegetation(id, bands):
     display_file(paths["vegetation_path_jpeg"])
 
 
-def process_landsat_rgb(id, bands):
+def process_rgb(id, bands, ops_string, angle_rotation=None):
     # get paths of files related to this id
     paths = file_paths_wrt_id(id)
 
@@ -124,7 +123,6 @@ def process_landsat_rgb(id, bands):
 
     rprint("Let's make our 🌍 imagery a bit more colorful for a human eye!")
     # apply rio-color correction
-    ops_string = "sigmoidal rgb 20 0.2"
     # refer to felicette.utils.color.py to see the parameters of this function
     # Bug: number of jobs if greater than 1, fails the job
     color(
@@ -139,7 +137,7 @@ def process_landsat_rgb(id, bands):
     # resize and save as jpeg image
     print("Generated 🌍 images!🎉")
     rprint("[yellow]Please wait while I resize and crop the image :) [/yellow]")
-    process_sat_image(paths["output_path"], paths["output_path_jpeg"])
+    process_sat_image(paths["output_path"], paths["output_path_jpeg"], rotate=angle_rotation)
     rprint("[blue]GeoTIFF saved at:[/blue]")
     print(paths["output_path"])
     rprint("[blue]JPEG image saved at:[/blue]")
@@ -149,8 +147,23 @@ def process_landsat_rgb(id, bands):
 
 
 def process_landsat_data(id, bands):
-
+    ops_string = "sigmoidal rgb 20 0.2"
     if bands == [2, 3, 4] or bands == [2, 3, 4, 8]:
-        process_landsat_rgb(id, bands)
+        process_rgb(id, bands, ops_string)
     elif bands == [3, 4, 5]:
-        process_landsat_vegetation(id, bands)
+        process_vegetation(id, bands, ops_string)
+
+def process_sentinel_data(id, bands):
+    ops_string = "gamma G 1.85 gamma B 1.85 gamma R 1.85 sigmoidal RGB 35 0.13 saturation 1.15"
+    angle_rotation = 0
+    if bands == [2, 3, 4]:
+        process_rgb(id, bands, ops_string, angle_rotation=angle_rotation)
+    elif bands == [3, 4, 5]:
+        process_vegetation(id, bands, ops_string, angle_rotation=angle_rotation)
+
+def process_data(id, bands):
+    product_type = get_product_type_from_id(id)
+    if product_type == "sentinel":
+        process_sentinel_data(id, bands)
+    else:
+        process_landsat_data(id, bands)
