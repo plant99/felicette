@@ -8,7 +8,7 @@ def find_max_area_index(contours):
     return contour_areas.index(max(contour_areas))
 
 
-def straighten_image(image):
+def straighten_image(image, rotate):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.bitwise_not(gray)
     # threshold the image, setting all foreground pixels to 255 and all background pixels to 0
@@ -16,15 +16,17 @@ def straighten_image(image):
     # flip data in threshold array
     thresh1 = thresh - 255
     np.where(thresh1 == -255, 0, thresh1)
-
+    angle = None
     # find angle of inclination
-
-    coords = np.column_stack(np.where(thresh1 > 0))
-    angle = cv2.minAreaRect(coords)[-1]
-    if angle < -45:
-        angle = -(90 + angle)
+    if rotate == None:
+        coords = np.column_stack(np.where(thresh1 > 0))
+        angle = cv2.minAreaRect(coords)[-1]
+        if angle < -45:
+            angle = -(90 + angle)
+        else:
+            angle = -angle
     else:
-        angle = -angle
+        angle = 0.0
 
     # rotate the image to deskew it
     (h, w) = image.shape[:2]
@@ -54,10 +56,10 @@ def remove_margin(rotated):
     return crop
 
 
-def process_sat_image(source_path, dest_path):
+def process_sat_image(source_path, dest_path, rotate):
     # load the image from disk
     image = cv2.imread(source_path)
-    straightened_image = straighten_image(image)
+    straightened_image = straighten_image(image, rotate=rotate)
     cropped_image = remove_margin(straightened_image)
 
     # write jpeg to destination
