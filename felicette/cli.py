@@ -9,16 +9,17 @@ from felicette.sat_downloader import (
     download_landsat_data,
     search_satellite_data,
     preview_satellite_image,
+    download_data,
 )
 from felicette.utils.sys_utils import exit_cli, remove_dir
-from felicette.sat_processor import process_landsat_data
+from felicette.sat_processor import process_data
 
 
-def trigger_download_and_processing(landsat_item, bands):
+def trigger_download_and_processing(item, bands):
     # download data
-    data_id = download_landsat_data(landsat_item, bands)
+    data_id = download_data(item, bands)
     # process data
-    process_landsat_data(data_id, bands)
+    process_data(data_id, bands)
 
 
 @click.command()
@@ -31,7 +32,7 @@ def trigger_download_and_processing(landsat_item, bands):
 )
 @click.option("-l", "--location-name", type=str, help="Location name in string format")
 @click.option(
-    "-p",
+    "-pan",
     "--pan-enhancement",
     default=False,
     is_flag=True,
@@ -57,7 +58,8 @@ def trigger_download_and_processing(landsat_item, bands):
     is_flag=True,
     help="Show the version number and quit",
 )
-def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, version):
+@click.option("-p", "--product", type=str, default="landsat", help="Product name 'landsat'/'sentinel'")
+def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, version, product):
     """Satellite imagery for dummies."""
     if version:
         version_no = pkg_resources.require("felicette")[0].version
@@ -68,37 +70,38 @@ def main(coordinates, location_name, pan_enhancement, no_preview, vegetation, ve
         coordinates = geocoder_util(location_name)
 
     # unless specified, cloud_cover_lt is 10
-    landsat_item = search_satellite_data(coordinates, 10)
+    item = search_satellite_data(coordinates, 10, product=product)
 
     # check if directory exists to save the data for this product id
-    check_sat_path(landsat_item._data["id"])
+    check_sat_path(item._data["id"])
 
     # if preview option is set, download and preview image
     if not no_preview:
-        preview_satellite_image(landsat_item)
+        preview_satellite_image(item)
 
     # set bands to process
     bands = [2, 3, 4]
-    if pan_enhancement:
+    if pan_enhancement and (product != "sentinel"):
         bands.append(8)
 
     if vegetation:
         bands = [3, 4, 5]
 
     # NB: can't enable pan-enhancement with vegetation
+    # NB: can't enable pan-enhancement with sentinel
 
     try:
-        trigger_download_and_processing(landsat_item, bands)
+        trigger_download_and_processing(item, bands)
     except RasterioIOError:
         response = input(
             "Local data for this location is corrupted, felicette will remove existing data to proceed, are you sure? [Y/n]"
         )
         if response in ["y", "Y", ""]:
             # remove file dir
-            file_paths = file_paths_wrt_id(landsat_item._data["id"])
+            file_paths = file_paths_wrt_id(item._data["id"])
             remove_dir(file_paths["base"])
             # retry downloading and processing image with a clean directory
-            trigger_download_and_processing(landsat_item, bands)
+            trigger_download_and_processing(item, bands)
         elif response in ["n", "N"]:
             exit_cli(print, "")
 
