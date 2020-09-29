@@ -42,7 +42,7 @@ def trigger_download_and_processing(item, bands):
     "--no-preview",
     default=False,
     is_flag=True,
-    help="Preview pre-processed low resolution RGB satellite image.",
+    help="Skip previewing of pre-processed low resolution RGB satellite image.",
 )
 @click.option(
     "-v",
