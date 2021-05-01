@@ -34,17 +34,18 @@ def search_satellite_data(coordinates, cloud_cover_lt, product="landsat"):
     product: landsat, sentinel
     """
     if product == "landsat":
-        product = "landsat-8-l1"
+        product = "landsat-8-l1-c1"
     elif product == "sentinel":
-        product = "sentinel-2-l1c"
+        product = "sentinel-s2-l1c"
 
     search = Search(
+        url="https://earth-search.aws.element84.com/v0",
         bbox=get_tiny_bbox(coordinates),
         query={
             "eo:cloud_cover": {"lt": cloud_cover_lt},
-            "collection": {"eq": product},
         },
         sort=[{"field": "eo:cloud_cover", "direction": "asc"}],
+        collections=[product]
     )
 
     # improvement: filter by date, cloud cover here
