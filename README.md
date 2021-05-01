@@ -122,7 +122,7 @@ To get a better Landsat image using felicette use:
 -------------------------
 ### Latest release
 
-[0.1.12](https://github.com/plant99/felicette/releases/tag/0.1.12)
+[0.1.13](https://github.com/plant99/felicette/releases/tag/0.1.13)
   
 
 -------------------------
