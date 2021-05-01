@@ -131,7 +131,7 @@ To get a better Landsat image using felicette use:
 ![Félicette](https://i.imgur.com/q4G5ThZ.jpg)
 
 
-Félicette was the first cat launched into space, on 18 October 1963. Even though she landed back on earth safely, Félicette was euthanized two months after the launch so that scientists could perform a necropsy to examine her brain. She was the only cat to have survived spaceflight. [Here's](https://www.youtube.com/watch?v=v-tpmvGRoyw) a footage of the mission from the archives.
+Félicette was the first cat launched into space, on 18 October 1963. Even though she landed back on earth safely, Félicette was euthanized two months after the launch so that scientists could perform a necropsy to examine her brain. She was the only cat to have survived spaceflight. [Here's](https://www.youtube.com/watch?v=v-tpmvGRoyw) footage of the mission from the archives.
 
 When you get a satellite imagery using this tool, imagine Félicette took the picture for you :)) 
 
