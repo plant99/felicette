@@ -14,7 +14,7 @@ dependencies = [
     "tqdm==4.48.0",
     "rasterio==1.1.5",
     "rio-color==1.0.0",
-    "pillow==8.1.1",
+    "pillow==8.3.2",
     "opencv-python==4.3.0.36",
     "boto3==1.14.21"
 ]
